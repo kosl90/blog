@@ -20,7 +20,7 @@ image:
     {% endif %}
   </header>
   <div class="entry-content" itemprop="description">
-    {{ post.content }}
+    {{ post.excerpt | join_chinese }}
   </div><!-- /.entry-content -->
 </article><!-- /.hentry -->
 {% endfor %}
