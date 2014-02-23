@@ -18,7 +18,9 @@ share: true
 器中显示会很奇怪，在原始的markdown中的某一行最后一个字与下一行的第一个字之间存
 在一个空格，作为使用单词的外国淫来说没什么问题，可是作为大天朝子民是无法忍受的。
 <figure>
+<a href="{{ site.url }}/images/fix-space/space.png" class='fancybox'>
 <img data-echo="{{ site.url }}/images/fix-space/space.png" alt="space" title="space">
+</a>
 <figcaption>文字之间存在空格</figcaption>
 </figure>
 
@@ -60,15 +62,21 @@ end
 
 经过修改后，blog就能够正常显示了。
 <figure class="half">
+<a href="{{ site.url }}/images/fix-space/space.png" class='fancybox'>
 <img data-echo="{{ site.url }}/images/fix-space/space.png" alt="space" title="space">
+</a>
+<a href="{{ site.url }}/images/fix-space/no-space.png" class='fancybox'>
 <img data-echo="{{ site.url }}/images/fix-space/no-space.png" alt="no-space" title="no space">
+</a>
     <figcaption>第一阶段成果</figcaption>
 </figure>
 
 修改2:
 虽然blog中的问题解决了，但是摘要部分并没有的到解决。
 <figure>
+<a href="{{ site.url }}/images/fix-space/wrong-excerpt.png" class='fancybox'>
 <img data-echo="{{ site.url }}/images/fix-space/wrong-excerpt.png" alt="wrong-excerpt" title="wrong-excerpt">
+</a>
     <figcaption>摘要中显示错误</figcaption>
 </figure>
 由于在pre\_render中添加`{%raw%}post.excerpt.join_chinese!{%endraw%}`会导致jekyll创建html时失败，
@@ -86,8 +94,12 @@ end
 然后将`Liquid::Template.register_filter(Jekyll::TemplateJoinChineseFilter)`添加到最后一行。
 最后，只需要在使用摘要的时候使用`{%raw%}{{ page.excerpt | join_chinese }}{% endraw %}`替代`{% raw %}{{ page.excerpt }}{% endraw %}`即可。
 <figure class='half'>
+<a href="{{ site.url }}/images/fix-space/wrong-excerpt.png" class='fancybox'>
 <img data-echo="{{ site.url }}/images/fix-space/wrong-excerpt.png" alt="wrong-excerpt" title="wrong-excerpt">
+</a>
+<a href="{{ site.url }}/images/fix-space/excerpt.png" class='fancybox'>
 <img data-echo="{{ site.url }}/images/fix-space/excerpt.png" alt="excerpt" title="excerpt">
+</a>
 <figcaption>摘要中空格也不存在了</figcaption>
 </figure>
 

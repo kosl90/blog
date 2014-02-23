@@ -21,7 +21,8 @@ module.exports = function(grunt) {
         },
         files: {
           'assets/css/main.min.css': [
-            'assets/less/main.less'
+            'assets/less/main.less',
+            'assets/css/jquery.fancybox.css'
           ]
         }
       }
