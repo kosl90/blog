@@ -1,6 +1,6 @@
 title:            kosl90's Blog
 description:      "Be gentle, be patient, be a man."
-disqus_shortname: 
+disqus_shortname:  kosl90
 #Your site's domain goes here. Leave localhost server or blank when working locally.
 url:         http://kosl90.github.io
 destination: kosl90.github.io
@@ -28,6 +28,8 @@ background: retina_dust.png
 
 # Analytics and webmaster tools stuff goes here
 google_analytics:   
+  id: 'UA-48343245-1'
+  site: 'kosl90.github.io'
 google_verify:      
 # https://ssl.bing.com/webmaster/configure/verify/ownership Option 2 content= goes here
 bing_verify:         

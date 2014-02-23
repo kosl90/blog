@@ -3,14 +3,15 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="{{ site.url }}/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
 <script src="{{ site.url }}/assets/js/scripts.min.js"></script>
-{% if site.google_analytics %}
+{% if site.google_analytics.id %}
+{% if site.google_analytics.old  %}
 <!-- Asynchronous Google Analytics snippet -->
 <script>
   var _gaq = _gaq || [];
   var pluginUrl = 
  '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
   _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
-  _gaq.push(['_setAccount', '{{ site.google_analytics }}']);
+  _gaq.push(['_setAccount', '{{ site.google_analytics.id }}']);
   _gaq.push(['_trackPageview']);
 
   (function() {
@@ -19,5 +20,25 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 </script>
+{% else %}
+<script>
+  (function(i=window,s=document,o='script',g='//www.',r='ga',a,m){
+   i['GoogleAnalyticsObject']=r;
+   i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)
+   },
+  i[r].l=1*new Date();
+  a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];
+  a.async=1;
+  a.src=g;
+  m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', site.google_analytics.id, site.google_analytics.site);
+  ga('send', 'pageview');
+
+</script>
+{% endif %}
 {% endif %}
 {% if site.disqus_shortname and page.comments %}{% include disqus_comments.html %}{% endif %}
