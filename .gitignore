@@ -9,4 +9,4 @@ node_modules
 *.sw[pa]
 
 assets/css/main.min.css
-assets/js/scripts.min.css
+assets/js/scripts.min.js
