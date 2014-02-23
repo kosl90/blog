@@ -36,7 +36,14 @@ bing_verify:
 
 # Links to include in top navigation
 # For external links add external: true
+# For submenu add submenu: true
 links:
+    - title: Links
+      submenu: true
+      links:
+        - title: RandomK
+          url: http://randomk.gitcafe.com
+          external: true
     - title: Feed
       url: /feed.xml
     - title: Old Blog
