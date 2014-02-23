@@ -48,7 +48,9 @@
         </div><!-- /.social-share -->{% endif %}
       </footer>
     </div><!-- /.entry-content -->
-    {% if site.disqus_shortname and page.comments %}<section id="disqus_thread"></section><!-- /#disqus_thread -->{% endif %}
+    {% if site.disqus_shortname and page.comments %}<section id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </section><!-- /#disqus_thread -->{% endif %}
     {% if site.related_posts.size %}
     <div class="read-more">
       {% for post in site.related_posts limit:1 %}
