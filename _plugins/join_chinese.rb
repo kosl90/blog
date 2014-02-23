@@ -6,20 +6,12 @@ require "./_plugins/post_filters"
 class String
   han = '\p{Han}|[，。？；：‘’“”、！……（）]'
   @@hh = /(#{han}) *\n *(#{han})/m
-  @@he = /(#{han}) *\n *(\w)/m
-  @@eh = /(\w) *\n *(#{han})/m
+  @@he = /(#{han}) *\n *(\p{Alpha})/m
+  @@eh = /(\p{Alpha}) *\n *(#{han})/m
   def join_chinese!
-    if m = match(@@hh)
-      gsub!(@@hh,  "#{m[1]}#{m[2]}")
-    end
-
-    if m = match(@@he)
-      gsub!(@@he,  "#{m[1]}#{m[2]}")
-    end
-
-    if m = match(@@eh)
-      gsub!(@@eh, "#{m[1]}#{m[2]}")
-    end
+    gsub!(@@hh, '\1\2')
+    gsub!(@@he, '\1\2')
+    gsub!(@@eh, '\1\2')
     self
   end
 end
