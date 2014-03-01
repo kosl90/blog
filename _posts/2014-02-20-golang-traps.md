@@ -67,3 +67,71 @@ func main() {
 	)
 }
 {% endhighlight %}
+
+
+## flag.Bool
+
+在吐槽这个之前，先简单的介绍一下命令行参数吧。命令行参数大致分为option（选项）/argument（参数）/command（命令）三种类型。
+
+option的作用是改变程序的行为，通常具有长和短两种形式，根据选项行为可分为switches(开关)和flags（标志）两类。switches通常用于开启或关闭某项功能，不接受任何参数，而flags则通常会接受参数。
+
+argument通常是命令行中除去option的部分，被操作的对象，可能是文件或者目录等等。
+
+与option和argument不同，command具有更明确的意义，用来管理一些列复杂的行为。使一些程序比较复杂，例如git，更易于使用和管理。由于command的出现导致option分为了global option和command option。
+
+关于命令行更详细的介绍《python标准库》中关于命令行模块和《Build Awesome Command-Line Applications in Ruby 2》都是不错的资料。
+
+言归正传，go语言中flag.Bool是典型的开关型选项。在使用前，当然要写一个小程序来学习一下：
+{% highlight go %}
+package main
+
+import (
+	"flag"
+	"fmt"
+)
+
+func main() {
+	var b bool
+	flag.BoolVar(&b, "b", false, "description for b")
+	flag.Parse()
+	fmt.Println(b)
+}
+{% endhighlight %}
+
+测试：
+{% highlight bash %}
+% go run test.go
+false
+% go run test.go -b
+true
+{% endhighlight %}
+
+It's simple and everything looks fine. 我再次天真的以为没问题了。接下来试一下另外一个程序吧。
+{% highlight go %}
+package main
+
+import (
+	"flag"
+	"fmt"
+)
+
+func main() {
+	var b bool
+	flag.BoolVar(&b, "b", true, "description for b")
+	flag.Parse()
+	fmt.Println(b)
+}
+{% endhighlight %}
+
+测试：
+{% highlight bash %}
+% go run test.go
+true
+% go run test.go -b
+true
+{% endhighlight %}
+
+WTF!!!您这是闹哪样啊，欺负新来的是吧，反人类是吧，你还可以再叼一点大丈夫的。好吧，我承认我又没读文档，因为在文档上找到了这样一句话：
+>You must use the -flag=false form to turn off a boolean flag.
+
+所以说大牛的世界你不懂，你所需要做的就是好好读文档，如果有的话，然后吐槽吧。
