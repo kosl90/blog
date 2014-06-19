@@ -135,3 +135,63 @@ WTF!!!您这是闹哪样啊，欺负新来的是吧，反人类是吧，你还�
 >You must use the -flag=false form to turn off a boolean flag.
 
 所以说大牛的世界你不懂，你所需要做的就是好好读文档，如果有的话，然后吐槽吧。
+
+
+## url
+前段时间在处理背景图片的时候遇到一个问题，那就是url中空格的问题，空格无法直接使
+用，需要转换为`%20`，而在go语言中正好有一个url的包，不过url包略有小坑。
+在url包中有一个叫`url.QueryEscape`的全局函数，咋一看这似乎就是所需的函数。
+{% highlight go %}
+package main
+
+import (
+	"fmt"
+	"net/url"
+)
+
+func main() {
+	fmt.Println(url.QueryEscape("a b"))
+}
+{% endhighlight %}
+得到的结果是：
+{% highlight bash %}
+a+b
+{% endhighlight %}
+
+这个必须不是正确的结果的。那么在go中到底有没有需要的函数呢？在网上查了老半天，
+stackoverflow上也有类似的问题，不过却并没有的到解答。处于无奈，只能区看源代码了
+，还好是开源的。在go的url包的源代码中发现却是存在将空格转换成`%20`的代码段，仔
+细看看了，发现String()函数就是寻找的函数。
+{% highlight go %}
+package main
+
+import (
+	"fmt"
+	"net/url"
+)
+
+func main() {
+	fmt.Println(url.Parse("a b"))
+}
+{% endhighlight %}
+
+输出结果为：
+{% highlight bash %}
+a%20b <nil>
+{% endhighlight %}
+
+也怪自己知识浅薄，不懂灵活运用，虽然知道在空格会转换成%20但是，并没有想到`%20`
+才是url中的合法字符，对文档中对String函数的描述并没有在以，虽然很无奈，这么不起
+眼的函数，也并没有想到会来处理编码问题（percent-encoding）。
+
+小结一下：
+<pre>
+|javascript        |golang         |
+|------------------|---------------|
+|encodeURI         |URL.String     |
+|escape            |url.QueryEscape|
+|encodeURIComponent|none           |
+</pre>
+
+也许encodeURIComponent可以通过其他方法组合实现，但是去并没有提供一个单独的函数
+来。
