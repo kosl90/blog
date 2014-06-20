@@ -138,6 +138,7 @@ WTF!!!您这是闹哪样啊，欺负新来的是吧，反人类是吧，你还�
 
 
 ## url
+
 前段时间在处理背景图片的时候遇到一个问题，那就是url中空格的问题，空格无法直接使
 用，需要转换为`%20`，而在go语言中正好有一个url的包，不过url包略有小坑。
 在url包中有一个叫`url.QueryEscape`的全局函数，咋一看这似乎就是所需的函数。
@@ -195,3 +196,50 @@ a%20b <nil>
 
 也许encodeURIComponent可以通过其他方法组合实现，但是去并没有提供一个单独的函数
 来。
+
+
+## unsetenv
+
+公司同事在写网络代理相关的代码，在设置系统代理时会设值环境变量，在设置和清空环境变量方面golang还是很方便的，只需要使用`os.Setenv`即可，可是如果需要删除一个环境变量时该怎么办呢？经过我的探索，sorry，在golang中目前并没有unsetenv函数，不过似乎已经有准备将unsetenv添加到`os`包中。那么现在要使用unsetenv该怎么办呢？
+于是同事写了一个UnsetEnv函数：
+{% highlight go %}
+func UnsetEnv(envName string) (err error) {
+	envs := os.Environ()
+	newEnvsData := make(map[string]string)
+	for _, e := range envs {
+		a := strings.SplitN(e, "=", 2)
+		var name, value string
+		if len(a) == 2 {
+			name = a[0]
+			value = a[1]
+		} else {
+			name = a[0]
+			value = ""
+		}
+		if name != envName {
+			newEnvsData[name] = value
+		}
+	}
+	os.Clearenv()
+	for e, v := range newEnvsData {
+		err = os.Setenv(e, v)
+		if err != nil {
+			return
+		}
+	}
+	return
+}
+{% endhighlight %}
+
+这个函数在某些程序中确实可以正确的运行，可是在测试过程中我们发现这个函数对通过C绑定的gio函数调用的程序并没有生效，于是就想到使用C中的`unsetenv`函数，便有了以下的函数：
+{% highlight go %}
+func UnsetEnv(_name string) {
+	name := C.CString(_name)
+	defer C.free(name)
+	C.unsetenv(name)
+}
+{% endhighlight %}
+
+确实C绑定的函数调用的程序生效了，可是通过golang调用的程序却不生效了==，最后只有将两个函数柔和在一起才能生效。
+
+我们并没有深入挖掘这个问题，也并不是非常确定是不是我们使用的姿势不对，这里仅供参考。
