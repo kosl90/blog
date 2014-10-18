@@ -25,6 +25,18 @@ module.exports = function(grunt) {
             'assets/css/jquery.fancybox.css'
           ]
         }
+      },
+      dev: {
+        options: {
+          compile: true,
+          compress: false
+        },
+        files: {
+          'assets/css/main.css': [
+            'assets/less/main.less',
+            'assets/css/jquery.fancybox.css'
+          ]
+        }
       }
     },
     uglify: {

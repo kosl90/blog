@@ -44,11 +44,11 @@ links:
         - title: RandomK
           url: http://randomk.gitcafe.com
           external: true
+        - title: Old Blog
+          url: http://blog.csdn.net/kosl90
+          external: true
     - title: Feed
       url: /feed.xml
-    - title: Old Blog
-      url: http://blog.csdn.net/kosl90
-      external: true
 
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 timezone:    Asia/Shanghai
@@ -63,4 +63,4 @@ permalink:   /:categories/:title
 paginate: 5
 
 include: [".htaccess", ".nojekyll"]
-exclude: ["lib", "config.rb", "Capfile", "config", "log", "Rakefile", "Rakefile.rb", "tmp", "less", "*.sublime-project", "*.sublime-workspace", "test", "spec", "Gruntfile.js", "package.json", "node_modules"]
+exclude: ["lib", "config.rb", "Capfile", "config", "Gemfile", "Gemfile.lock", "README.md", "LICENSE", "log", "Rakefile", "Rakefile.rb", "tmp", "less", "*.sublime-project", "*.sublime-workspace", "test", "spec", "Gruntfile.js", "package.json", "node_modules"]

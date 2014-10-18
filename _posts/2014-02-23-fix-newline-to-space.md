@@ -10,6 +10,8 @@ comments: true
 share: true
 ---
 
+更新：由于jekyll的更新，post\_filter已经被移除，因此修改方式已经无效。
+
 之前，[RandomK](http://randomk.gitcafe.com/)说我的blog有bug，其实在他说之前我就已经知道了，只是当时比较晚，所以没有修，今天周末将其解决之。
 
 ## 原因

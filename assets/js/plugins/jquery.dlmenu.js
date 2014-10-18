@@ -29,9 +29,7 @@
 		onLevelClick : function( el, name ) { return false; },
 		// callback: click a link that does not have a sub menu
 		// el is the link element (li); ev is the event obj
-		onLinkClick : function( el, ev ) { return false; },
-		backLabel: 'Back',
-		useActiveItemAsBackLabel: false
+		onLinkClick : function( el, ev ) { return false; }
 	};
 
 	$.DLMenu.prototype = {
@@ -71,17 +69,8 @@
 			this.$trigger = this.$el.children( '.dl-trigger' );
 			this.$menu = this.$el.children( 'ul.dl-menu' );
 			this.$menuitems = this.$menu.find( 'li:not(.dl-back)' );
-			this.$el.find( 'ul.dl-submenu' ).prepend( '<li class="dl-back"><a href="#">' + this.options.backLabel + '</a></li>' );
+			this.$el.find( 'ul.dl-submenu' ).prepend( '<li class="dl-back"><a href="#">back</a></li>' );
 			this.$back = this.$menu.find( 'li.dl-back' );
-
-			if (this.options.useActiveItemAsBackLabel) {
-				this.$back.each(function() {
-					var $this = $(this),
-						parentLabel = $this.parents('li:first').find('a:first').text();
-
-					$this.find('a').html(parentLabel);
-				});
-			}
 		},
 		_initEvents : function() {
 
@@ -108,7 +97,10 @@
 
 				if( $submenu.length > 0 ) {
 
-					var $flyin = $submenu.clone().css( 'opacity', 0 ).insertAfter( self.$menu ),
+					var $flyin = $submenu.clone().css({
+						opacity: 0,
+						margin: 0
+					}).insertAfter( self.$menu ),
 						onAnimationEndFn = function() {
 							self.$menu.off( self.animEndEventName ).removeClass( self.options.animationClasses.classout ).addClass( 'dl-subview' );
 							$item.addClass( 'dl-subviewopen' ).parents( '.dl-subviewopen:first' ).removeClass( 'dl-subviewopen' ).addClass( 'dl-subview' );
