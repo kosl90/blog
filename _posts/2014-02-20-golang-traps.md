@@ -34,16 +34,14 @@ func Exist(path string) {
 ## 没有拷贝文件的函数
 
 关于这一点，在github上有一个[项目](https://github.com/daaku/go.copyfile)可以一
-定程度上的解决这个问题，不过这个项目还有待完善，而且我个人使用方法感觉很不习惯
-，还是习惯以设置flag参数的形式来使用。
+定程度上的解决这个问题，不过这个项目还有待完善，而且我个人感觉很不习惯。
 
 
 ## filepath.Walk
 
-这个问题是今天遇到的，当我天真的以为对一个不存在的路径进行Walk的时候，此函数什
+这个问题是今天(2014-02-20)遇到的，当我天真的以为对一个不存在的路径进行Walk的时候，此函数什
 么也不会做，然后像其他函数一样返回错误给我的时候，可结果却是该函数仍然会调用回
-调函数。我之前还在纳闷第三个参数有什么用，好吧，今天发现你的文档的确是说了，
-**所有**错误都在回调函数中处理，这是我的错。
+调函数。后来在文档中发现了这个小秘密，**所有**错误都在回调函数中通过第三个参数处理。我之前还在纳闷回调中的第三个参数有什么用，显然这是我没有仔细阅读文档而相当然的错。
 
 {% highlight go %}
 package main
@@ -73,11 +71,11 @@ func main() {
 
 在吐槽这个之前，先简单的介绍一下命令行参数吧。命令行参数大致分为option（选项）/argument（参数）/command（命令）三种类型。
 
-option的作用是改变程序的行为，通常具有长和短两种形式，根据选项行为可分为switches(开关)和flags（标志）两类。switches通常用于开启或关闭某项功能，不接受任何参数，而flags则通常会接受参数。
+option的作用是改变程序的行为，通常具有长和短两种形式，根据选项行为可分为switches(开关)和flags（标志）两类。switches通常用于开启或关闭某项功能，不接受任何参数，而flags则通常需要接受参数。
 
 argument通常是命令行中除去option的部分，被操作的对象，可能是文件或者目录等等。
 
-与option和argument不同，command具有更明确的意义，用来管理一些列复杂的行为。使一些程序比较复杂，例如git，更易于使用和管理。由于command的出现导致option分为了global option和command option。
+与option和argument不同，command具有更明确的意义，用来管理一些列复杂的行为。使一些比较复杂的程序，例如git，更易于使用和管理。同时，由于command的出现导致option分为了global option和command option。
 
 关于命令行更详细的介绍《python标准库》中关于命令行模块和《Build Awesome Command-Line Applications in Ruby 2》都是不错的资料。
 
@@ -106,7 +104,7 @@ false
 true
 {% endhighlight %}
 
-It's simple and everything looks fine. 我再次天真的以为没问题了。接下来试一下另外一个程序吧。
+这个程序很简单，使用方式也很简单，并且程序的运行结果也正是所期待的结果。我再次天真的以为没问题了。接下来试一下另外一个程序吧。
 {% highlight go %}
 package main
 
@@ -131,10 +129,12 @@ true
 true
 {% endhighlight %}
 
-WTF!!!您这是闹哪样啊，欺负新来的是吧，反人类是吧，你还可以再叼一点大丈夫的。好吧，我承认我又没读文档，因为在文档上找到了这样一句话：
+WTF!!!您这是闹哪样啊，欺负新来的是吧，你还可以再叼一点没关系的。好吧，我承认我又没读文档，因为在文档上找到了这样一句话：
 >You must use the -flag=false form to turn off a boolean flag.
 
-所以说大牛的世界你不懂，你所需要做的就是好好读文档，如果有的话，然后吐槽吧。
+事实再一次教育我，Please RTFM carefully。只是我实在无法理解这样一种设计是出于何种原因。
+
+UPDATE：发现一个不错的命令行解析库[kingpin](https://github.com/alecthomas/kingpin)。
 
 
 ## url
@@ -159,10 +159,10 @@ func main() {
 a+b
 {% endhighlight %}
 
-这个必须不是正确的结果的。那么在go中到底有没有需要的函数呢？在网上查了老半天，
-stackoverflow上也有类似的问题，不过却并没有的到解答。处于无奈，只能区看源代码了
+这个必须不是正确的结果。那么在go中到底有没有需要的函数呢？在网上查了老半天，
+stackoverflow上也有类似的问题，不过却并没有的到解答。处于无奈，只能去看源代码了
 ，还好是开源的。在go的url包的源代码中发现却是存在将空格转换成`%20`的代码段，仔
-细看看了，发现String()函数就是寻找的函数。
+细看看了，发现`String()`函数就是寻找的函数。
 {% highlight go %}
 package main
 
@@ -181,10 +181,6 @@ func main() {
 a%20b <nil>
 {% endhighlight %}
 
-也怪自己知识浅薄，不懂灵活运用，虽然知道在空格会转换成%20但是，并没有想到`%20`
-才是url中的合法字符，对文档中对String函数的描述并没有在以，虽然很无奈，这么不起
-眼的函数，也并没有想到会来处理编码问题（percent-encoding）。
-
 小结一下：
 <pre>
 |javascript        |golang         |
@@ -194,13 +190,13 @@ a%20b <nil>
 |encodeURIComponent|none           |
 </pre>
 
-也许encodeURIComponent可以通过其他方法组合实现，但是去并没有提供一个单独的函数
+也许encodeURIComponent可以通过其他方法组合实现，但是却并没有提供一个单独的函数
 来。
 
 
 ## unsetenv
 
-公司同事在写网络代理相关的代码，在设置系统代理时会设值环境变量，在设置和清空环境变量方面golang还是很方便的，只需要使用`os.Setenv`即可，可是如果需要删除一个环境变量时该怎么办呢？经过我的探索，sorry，在golang中目前并没有unsetenv函数，不过似乎已经有准备将unsetenv添加到`os`包中。那么现在要使用unsetenv该怎么办呢？
+公司同事在写网络代理相关的代码，在设置系统代理时会设值环境变量，在设置和清空环境变量方面golang还是很方便的，只需要使用`os.Setenv`即可，可是如果需要删除一个环境变量时该怎么办呢？经过我的探索，sorry，在golang中目前并没有unsetenv函数，不过似乎已经有准备在以后的版本中将unsetenv添加到`os`包中。那么现在要使用unsetenv该怎么办呢？
 于是同事写了一个UnsetEnv函数：
 {% highlight go %}
 func UnsetEnv(envName string) (err error) {

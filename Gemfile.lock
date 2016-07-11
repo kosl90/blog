@@ -49,11 +49,11 @@ GEM
     listen (2.7.4)
       celluloid (>= 0.15.2)
       celluloid-io (>= 0.15.0)
-      rb-fsevent (>= 0.9.3)
+      rb-fsevent (>= 0.9.4)
       rb-inotify (>= 0.9)
     mercenary (0.3.3)
     minitest (5.3.3)
-    nio4r (1.0.0)
+    nio4r (1.1.0)
     parslet (1.5.0)
       blankslate (~> 2.0)
     posix-spawn (0.3.8)
@@ -86,7 +86,10 @@ DEPENDENCIES
   activesupport
   coderay
   jekyll
-  kramdown
   rake
+  redcarpet
   stringex
   thor
+
+BUNDLED WITH
+   1.12.5
