@@ -2,7 +2,7 @@ title:            kosl90's Blog
 description:      "Be gentle, be patient, be a man."
 disqus_shortname:  kosl90
 #Your site's domain goes here. Leave localhost server or blank when working locally.
-url:         http://kosl90.github.io
+url:         http://192.168.222.129:4000 # change this url if ip is changed.
 destination: kosl90.github.io
 
 # Owner/author information
