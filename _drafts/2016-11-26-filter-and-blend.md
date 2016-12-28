@@ -1,3 +1,13 @@
+# filter
+
+TODO
+
+
+# backdrop-filter
+
+chrome://flags/#enable-experimental-web-platform-features
+
+
 # order of graphical operations
 
 followed [SVG compositing](http://www.w3.org/TR/SVG11/render.html#Introduction) model [SVG11](https://www.w3.org/TR/compositing-1/#biblio-svg11): filter | clipping | masking | blending | compositing
@@ -46,6 +56,7 @@ Simply, blending can only affect the elements on the same stacking context.
   background: #fff;
 }
 ~~~
+
 ~~~HTML
 <div class='container container-2'>
 <img src=''>
@@ -81,6 +92,9 @@ the content that is behind the element, instead they must act as if they are ren
 
 
 # ref
+- https://webkit.org/blog/3632/introducing-backdrop-filters/
+- http://www.w3cplus.com/css3/advanced-css-filters.html
+- https://www.w3.org/TR/filter-effects/#intro
 - \<blend mode\>: [http://tympanus.net/codrops/css_reference/blend-mode/](http://tympanus.net/codrops/css_reference/blend-mode/)
 - background-blend-mode: http://tympanus.net/codrops/css_reference/background-blend-mode/
 - mix-blend-mode: http://tympanus.net/codrops/css_reference/mix-blend-mode/
