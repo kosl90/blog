@@ -1,12 +1,15 @@
 _site
+kosl90.github.io/
 .DS_Store
 *.sublime-project
 *.sublime-workspace
 codekit-config.json
-node_modules
+node_modules/
 *.~
 \#.*\#
 *.sw[pa]
 
 assets/css/main.min.css
 assets/js/scripts.min.js
+
+npm-debug.log*

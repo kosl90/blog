@@ -24,7 +24,7 @@ share: true
 
 [反射](http://en.wikipedia.org/wiki/Reflection_(computer_science))和[内省](http://en.wikipedia.org/wiki/Introspection_(computer_science))是和元编程息息相关的两个概念，这两个概念非常相似，但却有很大的不同。
 
-	**内省**是在运行时检查对象的类型和属性的能力，**反射**是在运行时检查和修改程序结构和行为的能力。
+> **内省**是在运行时检查对象的类型和属性的能力，**反射**是在运行时检查和修改程序结构和行为的能力。
 
 可以看出，反射比内省更加强大，内省是反射的子集，这一点不应该混淆。有些为地方可以看到说自省和反射是一回事，我想这个自省应该是根据`introspection`来翻译的，而`introspection`是`type introspection`的简称。so，不要相信那些人，他们应该去补习了。
 

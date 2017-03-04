@@ -3,7 +3,7 @@ description:      "Be gentle, be patient, be a man."
 disqus_shortname:  kosl90
 #Your site's domain goes here. Leave localhost server or blank when working locally.
 url:         http://kosl90.github.io
-destination: kosl90.github.io
+description: kosl90.github.io
 
 # Owner/author information
 owner:
@@ -53,7 +53,7 @@ links:
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 timezone:    Asia/Shanghai
 future:      true
-highlighter: pygments
+highlighter: rouge
 markdown:    redcarpet
 
 # https://github.com/mojombo/jekyll/wiki/Permalinks
@@ -62,5 +62,8 @@ permalink:   /:categories/:title
 # Amount of post to show on home page
 paginate: 5
 
+incremental: true
+
+gems: ["jekyll-paginate"]
 include: [".htaccess", ".nojekyll"]
 exclude: ["lib", "config.rb", "Capfile", "config", "Gemfile", "Gemfile.lock", "README.md", "LICENSE", "log", "Rakefile", "Rakefile.rb", "tmp", "less", "*.sublime-project", "*.sublime-workspace", "test", "spec", "Gruntfile.js", "package.json", "node_modules", "Makefile"]
